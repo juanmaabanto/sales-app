@@ -17,7 +17,7 @@ const Menu = () => {
 
   return (
     <Breadcrumbs aria-label="breadcrumb">
-      <LinkRouter underline="hover" color="inherit" to="/">
+      <LinkRouter underline="hover" color="inherit" to="/" sx={{ fontSize: { xs: '0.75rem', sm: '1rem'} }}>
         Home
       </LinkRouter>
       {pathnames.map((value, index) => {
@@ -27,7 +27,7 @@ const Menu = () => {
         const to = `/${pathnames.slice(0, index + 1).join('/')}`;
 
         return last ? (
-          <Typography key={to} sx={{ color: 'text.disabled' }}>
+          <Typography key={to} sx={{ color: 'text.disabled', fontSize: { xs: '0.75rem', sm: '1rem'} }}>
             {pathnames.includes('details') && index === pathnames.length - 1 ? `Product ${value}` : value}
           </Typography>
         ) : (

@@ -1,16 +1,50 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid2';
+import { useGetProduct } from '../../hooks/useGetProduct';
+import ProductImage from '../../components/product/ProductImage';
+import ProductDescription from '../../components/product/ProductDescription';
+import ProductAction from '../../components/product/ProductAction';
 
 const Detail = () => {
   const { productId } = useParams();
-  console.log(productId)
+  const { data, error, isLoading } = useGetProduct(productId);
+
+  if (isLoading) {
+    return <Box
+      sx={{
+          mt: '2rem',
+          textAlign: 'center'
+      }}
+    >
+      <CircularProgress />
+    </Box>;
+  }
+
+  if (error) {
+    return <Box
+              sx={{
+                color: 'error.main',
+                fontSize: '0.75rem',
+                overflow: 'hidden',
+                p: '0.25rem',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'pre-wrap'
+            }}
+          >
+            an error ocurred
+          </Box> ;
+  }
+
   return (
     <Box 
       sx={{
         height: '100%',
         overflowY: 'auto',
-        width: '100%'
+        width: '100%',
+        p: 3
       }}
     >
       <Box
@@ -23,7 +57,26 @@ const Detail = () => {
           pr: { sm: '4rem' }
         }}
       >
-        <h2>Detalle de producto {productId} </h2>
+        <Grid container spacing={2} columns={{ xs: 1, md: 2 }}>
+          <Grid  size={1}>
+            <ProductImage imgUrl={data.imgUrl} /> 
+          </Grid>
+          <Grid size={1}>
+            <ProductDescription 
+              brand={data.brand}
+              model={data.model}
+              price={data.price}
+              cpu={data.cpu}
+              ram={data.ram}
+              os={data.os}
+              displayResolution={data.displayResolution}
+              battery={data.battery}
+              weight={data.weight}
+            />
+            <ProductAction options={data.options}/>
+          </Grid>
+        </Grid>
+        
       </Box>
     </Box>
   );

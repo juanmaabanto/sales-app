@@ -14,3 +14,10 @@ export const fetchProducts = async (filter) => {
 
   return data;
 };
+
+export const getProductById = async (productId) => {
+  const url = `https://itx-frontend-test.onrender.com/api/product/${productId}`;
+  const { data } = await axios.get(url);
+
+  return data
+}
