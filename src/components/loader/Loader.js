@@ -40,7 +40,7 @@ const Loader = ({ error = '' }) => {
 };
 
 Loader.propTypes = {
-    error: PropTypes.string.isRequired
+    error: PropTypes.string
 }
 
 export default Loader;
