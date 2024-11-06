@@ -5,7 +5,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { ThemeContext } from '../../contexts/theme/theme.context';
 
-const InputSearch = () => {
+const InputSearch = ({ filter, onFilterChange }) => {
   const { theme } = useContext(ThemeContext)
 
   return (
@@ -39,7 +39,7 @@ const InputSearch = () => {
         <SearchIcon />
       </Box>
       <InputBase
-        placeholder="Search…"
+        placeholder="Filter by brand or model"
         inputProps={{ 'aria-label': 'search' }}
         sx={{
           color: 'inherit',
@@ -56,6 +56,8 @@ const InputSearch = () => {
             },
           },
         }}
+        value={filter}
+        onChange={onFilterChange}
       />
     </Box>
   );

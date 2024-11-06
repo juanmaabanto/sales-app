@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import InputSearch from '../../components/input/InputSearch';
+import { useProducts } from '../../hooks/useProducts';
+import ImageList from '../../components/list/ImageList';
+
 
 const Search = () => {
+  const [filter, setFilter] = useState('');
+  const { data, error, isLoading } = useProducts(filter);
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
   return (
     <Box 
       sx={{
@@ -37,11 +48,33 @@ const Search = () => {
               fontSize: { xs: '1rem', sm: '2rem' }
             }}
           >
-            Lista de Productos
+            Products List
           </Box>
-          <InputSearch />
+          <InputSearch filter={filter} onFilterChange={handleFilterChange} />
         </Box>
-        <Box> Aqui va la lista </Box>
+        {(isLoading ? 
+          <Box
+            sx={{
+                mt: '2rem',
+                textAlign: 'center'
+            }}
+          >
+            <CircularProgress />
+          </Box> :
+          (error ?
+            <Box
+            sx={{
+              color: 'error.main',
+              fontSize: '0.75rem',
+              overflow: 'hidden',
+              p: '0.25rem',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'pre-wrap'
+          }}
+            >
+              an error ocurred
+            </Box> : <ImageList data={data} />
+          ))}
       </Box>
     </Box>
   );
