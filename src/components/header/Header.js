@@ -9,9 +9,12 @@ import ContrastIcon from '@mui/icons-material/Contrast';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { ThemeContext } from '../../contexts/theme/theme.context';
 import Menu from '../menu/Menu';
+import { useCart } from '../../hooks/useCart';
 
 const Header = () => {
   const { toggleTheme } = useContext(ThemeContext)
+  const { cartCount } = useCart();
+
   return (
     <AppBar
       position='sticky'
@@ -48,7 +51,7 @@ const Header = () => {
         <IconButton
           color="inherit"
         >
-          <Badge badgeContent={0} color="error">
+          <Badge badgeContent={cartCount} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>

@@ -73,7 +73,7 @@ const Detail = () => {
               battery={data.battery}
               weight={data.weight}
             />
-            <ProductAction options={data.options}/>
+            <ProductAction productId={productId} options={data.options}/>
           </Grid>
         </Grid>
         

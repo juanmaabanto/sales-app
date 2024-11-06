@@ -4,13 +4,21 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useAddCart } from '../../hooks/useAddCart';
 
-const ProductAction = ({ options }) => {
+const ProductAction = ({ productId, options }) => {
   const [color, setColor] = useState(options.colors[0].name);
   const [storage, setStorage] = useState(options.storages[0].name);
+  const { mutate, isLoading } = useAddCart();
 
   const handleAddToCart = () => {
-    alert(`Producto añadido al carrito: ${color}, ${storage}`);
+    const product = {
+      id: productId,
+      colorCode: options.colors[0].code,
+      storageCode: options.storages[0].code
+    }
+
+    mutate(product);
   };
 
   return (
@@ -48,8 +56,9 @@ const ProductAction = ({ options }) => {
           color="primary"
           onClick={handleAddToCart}
           fullWidth
+          disabled={isLoading}
         >
-          Añadir al carrito
+          {isLoading ? 'Añadiendo...' : 'Añadir al carrito'}
         </Button>
       </Box>
     </Box>
